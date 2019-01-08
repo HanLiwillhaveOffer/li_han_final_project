@@ -1,0 +1,24 @@
+{% extends 'recipe/base.html' %}
+{% block title %}
+    Ingredient List
+{% endblock %}
+{% block create_button%}
+    {% if perms.recipe.add_ingredient %}
+ <a
+                href="{% url 'ingredient_create' %}"
+                class="button button-primary">
+            Create New Ingredient</a>
+    {% endif %}
+{% endblock %}
+{% block org_content %}
+    <ul>
+            {% for ingredient in ingredient_list %}
+                    <li>
+                <a href="{{ ingredient.get_absolute_url }}">
+                    {{ ingredient }}</a>
+                    </li>
+            {% empty %}
+            <li><em>There are currently no ingredients available.</em></li>
+                </ul>
+            {% endfor %}
+{% endblock %}

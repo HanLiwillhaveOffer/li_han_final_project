@@ -1,0 +1,15 @@
+{% extends 'recipe/base.html' %}
+
+{% block title %}
+    Create Category
+{% endblock %}
+
+{% block content %}
+    <form
+        action = "{% url 'category_create' %}"
+        method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Category</button>
+    </form>
+{% endblock %}

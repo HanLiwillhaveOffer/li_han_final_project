@@ -1,0 +1,25 @@
+{% extends 'recipe/base.html' %}
+
+{% block title %}
+    Error Deleting Category
+{% endblock %}
+
+{% block content %}
+    <div>
+    <h2>Error Deleting Category</h2>
+    <p>
+        You may not delete category {{ category }}. This
+        category has the following ingredients:
+    </p>
+
+    <ul>
+        {% for recipe in recipes %}
+        <li><a href = "{{ recipe.get_absolute_url }}">{{ recipe }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        Return to <a href = "{% url 'category_list' %}">Category List</a>
+    </p>
+    </div>
+{% endblock %}

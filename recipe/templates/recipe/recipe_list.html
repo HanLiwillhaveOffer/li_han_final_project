@@ -1,0 +1,27 @@
+{% extends 'recipe/base.html' %}
+{% block title %}
+    Recipe List
+{% endblock %}
+{% block create_button%}
+ <a
+                href="{% url 'recipe_create' %}"
+                class="button button-primary">
+            Create New Recipe</a>
+{% endblock %}
+{% block org_content %}
+    <ul>
+            {% for recipe in recipe_list %}
+                    <li>
+                <a href="{{ recipe.get_absolute_url }}">
+                    {{ recipe }}</a>
+                   <div>Comments:{{ recipe.comments.count}}</div>
+                    <div>Average Rate:{{ recipe.average_rate_score}}</div>
+                    {% if recipe.published_date %}
+                        <div><em>Published</em></div>
+                        {% endif %}
+                    </li>
+            {% empty %}
+            <li><em>There are currently no recipes available.</em></li>
+                </ul>
+            {% endfor %}
+{% endblock %}

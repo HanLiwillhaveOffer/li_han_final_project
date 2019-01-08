@@ -1,0 +1,72 @@
+{% extends 'recipe/base.html' %}
+
+
+{% block title %}
+    Recipe- {{ recipe.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="recipe">
+    {% if recipe.published_date %}
+        <div class="date">
+        {{ recipe.published_date }}
+        </div>
+    {% else %}
+        <a class="btn btn-default" href="{% url 'recipe_publish' pk=recipe.pk %}">Publish</a>
+    {% endif %}
+         <ul class="inline">
+                {% if recipe.author == user %}
+                        <li>
+                            <a href="{{ recipe.get_update_url }}"
+                               class="button">
+                                Edit</a></li>
+                        <li>
+                            <a href="{{ recipe.get_delete_url }}"
+                               class="button">
+                                Delete</a></li>
+             {% endif %}
+                </ul>
+        <h1>{{ recipe.title }}</h1>
+        <h4>Average Rate: {{ recipe.average_rate_score}}</h4>
+    <h4>Chef: {{ recipe.author.username}}</h4>
+        <div><strong>Main Ingredient:</strong>
+                    <a href="{{ recipe.ingredient.get_absolute_url }}">
+                    {{ recipe.ingredient }}</a>
+                </div>
+
+
+                <div><strong>Category:</strong>
+                    <a href="{{ recipe.category.get_absolute_url }}">
+                    {{ recipe.category }}</a>
+                </div>
+
+
+        <p><strong>Steps:</strong>{{ recipe.step|linebreaksbr }}</p>
+    </div>
+    <hr>
+    {% if recipe.author != user %}
+    <a class="btn btn-default" href="{% url 'add_comment_to_recipe' pk=recipe.pk %}">Add comment</a>
+    {% endif %}
+{% for comment in comment_list %}
+
+    <div class="comment">
+        <div class="date">
+
+            {{ comment.created_date }}
+            {% if comment.author == user %}
+            <a href="{{ comment.get_delete_url }}"
+                               class="button">
+                                Delete</a>
+                <a href="{{ comment.get_update_url }}"
+                   class="button">
+                    Update</a>
+            {% endif %}
+        </div>
+        <strong>{{ comment.author }}:</strong>
+        <div><em>Rate: {{ comment.rate }}</em></div>
+        <p>{{ comment.text|linebreaks }}</p>
+    </div>
+{% empty %}
+    <p>No comments here yet :(</p>
+{% endfor %}
+{% endblock %}

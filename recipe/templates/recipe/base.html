@@ -1,0 +1,115 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>RecipeHub</title>
+        <link rel="stylesheet" type="text/css"
+          href="{% static 'recipe/normalize.css' %}">
+        <link rel="stylesheet" type="text/css"
+          href="{% static 'recipe/skeleton.css' %}">
+        <link rel="stylesheet" type="text/css"
+          href="{% static 'recipe/recipe.css' %}">
+    </head>
+<body>
+<div class="container">
+    <div class="status row">
+        <div class="offset-by-eight four columns">
+            <ul class="inline">
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout_urlpattern' %}">
+                        Log Out, {{ user.get_username }}</a></li>
+                {% else %}
+                    <li><a href="{% url 'login_urlpattern' %}">
+                        Log In</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+        <h1 class="logo"><a href="{% url 'recipe_list' %}">RecipeHub</a></h1>
+<nav>
+    <ul>
+        <li>
+            <a href = "{% url 'recipe_list' %}">
+                My Recipe
+            </a>
+        </li>
+        <li>
+            <a href = "{% url 'published_recipe_list' %}">
+                Published Recipe
+            </a>
+        </li>
+               <li>
+            <a href = {% url 'category_list'%}>
+                Categories
+            </a>
+        </li>
+                    <li>
+            <a href = {% url 'ingredient_list'%}>
+                Ingredients
+            </a>
+        </li>
+        <li>
+            <a href = "{% url 'about_urlpattern' %}">
+                About us
+            </a>
+        </li>
+    </ul>
+</nav>
+    <main>
+        {% block content %}
+            <div class="row">
+                <section class="eight columns">
+                    {% block org_content %}
+                        This is default content!
+                    {% endblock %}
+                </section>
+                <section class="desktop four columns">
+                    {% block create_button %}
+                    {% endblock %}
+                </section>
+            </div>
+            <div class="row">
+                <div class="twelve columns">
+                    {% block content_footer %}{% endblock %}
+                </div>
+            </div>
+        {% endblock %}
+    </main>
+    {% if is_paginated %}
+        <div class="row">
+            <div class="twelve columns">
+                <ul class="pagination">
+                    {% if first_page_url %}
+                        <li>
+                            <a href="{{ first_page_url }}">
+                                First</a>
+                        </li>
+                    {% endif %}
+                    {% if previous_page_url %}
+                        <li>
+                            <a href="{{ previous_page_url }}">
+                                Previous</a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        Page {{ page_obj.number }}
+                        of {{ paginator.num_pages }}
+                    </li>
+                    {% if next_page_url %}
+                        <li>
+                            <a href="{{ next_page_url }}">
+                                Next</a>
+                        </li>
+                    {% endif %}
+                    {% if last_page_url %}
+                        <li>
+                            <a href="{{ last_page_url }}">
+                                Last</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+</div><!-- container -->
+</body>
+</html>

@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+from django.urls import reverse_lazy
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -68,6 +68,10 @@ TEMPLATES = [
         },
     },
 ]
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.core.context_processors.request",
+)
+
 
 WSGI_APPLICATION = 'li_han_final_project.wsgi.application'
 
@@ -121,3 +125,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+LOGIN_REDIRECT_URL = 'about_urlpattern'
+LOGOUT_REDIRECT_URL = 'login_urlpattern'
+LOGIN_URL = reverse_lazy('login_urlpattern')
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

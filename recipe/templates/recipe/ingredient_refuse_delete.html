@@ -1,0 +1,25 @@
+{% extends 'recipe/base.html' %}
+
+{% block title %}
+    Error Deleting Ingredient
+{% endblock %}
+
+{% block content %}
+    <div>
+    <h2>Error Deleting Ingredient</h2>
+    <p>
+        You may not delete ingredient {{ ingredient }}. The following recipes
+        are using this ingredient as main ingredient:
+    </p>
+
+    <ul>
+        {% for recipe in recipes %}
+        <li><a href = "{{ recipe.get_absolute_url }}">{{ recipe }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        Return to <a href = "{% url 'ingredient_list' %}">Ingredient List</a>
+    </p>
+    </div>
+{% endblock %}

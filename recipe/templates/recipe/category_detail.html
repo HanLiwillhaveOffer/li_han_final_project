@@ -1,0 +1,43 @@
+{% extends 'recipe/base.html' %}
+
+
+{% block title %}
+    Category- {{ category.name }}
+{% endblock %}
+
+{% block content %}
+    <div>
+         <ul class="inline">
+                        {% if perms.recipe.change_category %}
+                        <li>
+                            <a href="{{ category.get_update_url }}"
+                               class="button">
+                                Edit</a></li>
+                        {% endif %}
+                        {% if perms.recipe.delete_category %}
+                        <li>
+                            <a href="{{ category.get_delete_url }}"
+                               class="button">
+                                Delete</a></li>
+                        {% endif %}
+                </ul>
+        <h1>{{ category.category_name }}</h1>
+    </div>
+
+    <h3>Recipes in this category</h3>
+{% for recipe in recipe_list %}
+                    {% if recipe.published_date %}
+    <li >
+            <a href="{{ recipe.get_absolute_url }}">{{ recipe.title }}</a>
+            <div>Average Rate: {{ recipe.average_rate_score}}</div>
+        {% if recipe.author == user %}
+            <a href="{{ recipe.get_delete_url }}"
+                               class="button">
+                                Delete</a>
+            {% endif %}
+    </li>
+    {% endif %}
+{% empty %}
+    <p>No recipes under this category :(</p>
+{% endfor %}
+{% endblock %}

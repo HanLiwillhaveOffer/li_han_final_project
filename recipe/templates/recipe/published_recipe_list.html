@@ -1,0 +1,24 @@
+{% extends 'recipe/base.html' %}
+{% block title %}
+    Published Recipe List
+{% endblock %}
+{% block org_content %}
+    <ul>
+            {% for recipe in recipe_list %}
+                {% if recipe.published_date %}
+                    <li>
+                <a href="{{ recipe.get_absolute_url }}">
+                    {{ recipe }}</a>
+                   <div>Comments:{{ recipe.comments.count}}</div>
+                        <div>Average Rate:{{ recipe.average_rate_score}}</div>
+                    <div class="date">
+                    {{ recipe.published_date }}
+                    </div>
+                    </li>
+                {% endif %}
+            {% empty %}
+            <li><em>There are currently no recipes available.</em></li>
+
+            {% endfor %}
+        </ul>
+{% endblock %}
